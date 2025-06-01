@@ -1,6 +1,9 @@
 import os
-from typing import List, Tuple, Dict
+from typing import List
 from functools import lru_cache, reduce
+import sys
+
+sys.setrecursionlimit(2147483647)
 
 def read_file(file):
     filepath = os.path.join(os.path.split(__file__)[0], file)
@@ -56,7 +59,7 @@ def calc_distance(time_pressed, remaining_time, total_time, highest_distance):
     results = []
     distance = time_pressed * remaining_time
 
-    print(f"With time pressed: {time_pressed} and remaining time: {remaining_time}, the distance would be: {distance}, and required distance is {highest_distance}")
+    # print(f"With time pressed: {time_pressed} and remaining time: {remaining_time}, the distance would be: {distance}, and required distance is {highest_distance}")
 
     if time_pressed >= total_time:
         return results
@@ -73,6 +76,21 @@ def calc_distance_3(remaining_time, total_time, highest_distance):
     min_time_pressed = (highest_distance // total_time)+1
     min_time_pressed_2 = 0
     for i in range(min_time_pressed, total_time):
+        if  min_time_pressed_2 == 0:
+            remaining_game_time = (total_time - i)
+            current_distance = (i * remaining_game_time)
+            if current_distance > highest_distance:
+                min_time_pressed_2 = i
+    
+    max_remaining_time = remaining_time - min_time_pressed_2
+
+    margine_for_error = (max_remaining_time - min_time_pressed_2)+1
+    return margine_for_error
+
+def calc_distance_4(remaining_time, total_time, highest_distance):
+    
+    min_time_pressed_2 = 0
+    for i in range(total_time):
         if  min_time_pressed_2 == 0:
             remaining_game_time = (total_time - i)
             current_distance = (i * remaining_game_time)
@@ -105,7 +123,6 @@ def main1(inputfile, expected_result_1=0, expected_result_2=0):
     race_info = read_races(read_file(inputfile))
     margine_for_error = []
     for race in race_info:
-        print("*"*24)
         result = calc_distance(0, race_info[race]['time'], race_info[race]['time'], race_info[race]['distance'])
         margine_for_error.append(len(result))
     actual_result = reduce(multiply, margine_for_error)
@@ -117,7 +134,6 @@ def main1_2(inputfile, expected_result_1=0, expected_result_2=0):
     race_info = read_races(read_file(inputfile))
     margine_for_error = []
     for race in race_info:
-        print("*"*24)
         result = calc_distance_3(race_info[race]['time'], race_info[race]['time'], race_info[race]['distance'])
         margine_for_error.append(result)
     actual_result = reduce(multiply, margine_for_error)
@@ -129,12 +145,20 @@ def main1_2(inputfile, expected_result_1=0, expected_result_2=0):
 def main2(inputfile, expected_result_1=0, expected_result_2=0):
     race_info = read_races_2(read_file(inputfile))
     for race in race_info:
-        print("*"*24)
         result = calc_distance_3(race_info[race]['time'], race_info[race]['time'], race_info[race]['distance'])
     actual_result_2 = result
     print("="*12)
     print(f"Running in main2")
     parse_result(actual_result_2, expected_result_2, inputfile)
+
+def main2_2(inputfile, expected_result_1=0, expected_result_2=0):
+    race_info = read_races_2(read_file(inputfile))
+    for race in race_info:
+        result = calc_distance_4(race_info[race]['time'], race_info[race]['time'], race_info[race]['distance'])
+    actual_result = result
+    print("="*12)
+    print(f"Running in main2_2")
+    parse_result(actual_result, expected_result_2, inputfile)
 
 if __name__=="__main__":
     for inputfile in (
@@ -144,6 +168,7 @@ if __name__=="__main__":
         main1(*inputfile)
         main1_2(*inputfile)
         main2(*inputfile)
+        main2_2(*inputfile)
     
     print('\n')
 
