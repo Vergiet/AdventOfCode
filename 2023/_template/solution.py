@@ -50,6 +50,6 @@ if __name__=="__main__":
         ("example", 0, 0), 
         ("input", 0, 0),
     ):
-        main1(inputfile)
-        main2(inputfile)
+        main1(*inputfile)
+        main2(*inputfile)
     
