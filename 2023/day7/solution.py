@@ -121,6 +121,7 @@ def get_hand_type_info(hand):
 
     return hand_type, int(hand_type_value)
 
+
 def concat(a, b):
     return f"{a}{b}"
 
@@ -228,6 +229,7 @@ def main2(inputfile, expected_result_1=0, expected_result_2=0):
     actual_result = values
 
     parse_result(actual_result, expected_result_2, inputfile)
+
 
 if __name__ == "__main__":
     for inputfile in (
