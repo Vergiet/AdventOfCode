@@ -37,8 +37,8 @@ def main2(inputfile, expected_result_1=0, expected_result_2=0):
 
 if __name__ == "__main__":
     for inputfile in (
-        ("example", 0, 0),
-        ("input", 0, 0),
+        ("example", -1, -1),
+        ("input", -1, -1),
     ):
         main1(*inputfile)
         main2(*inputfile)
