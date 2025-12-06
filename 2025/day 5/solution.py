@@ -22,23 +22,6 @@ def parse_input(input):
     return fresh_ranges, available_ingredients
 
 
-# def create_fresh_ingredients(fresh_ranges):
-#     a = "."
-#     fresh_ingredients = {}
-#     for start, end in fresh_ranges:
-#         for position in range(start, end + 1):
-#             fresh_ingredients[position] = a
-#     return fresh_ingredients
-
-
-# def available_fresh_ingredients(fresh_ingredients, available_ingredients):
-#     available_fresh_ingredients = 0
-#     for available_ingredient in available_ingredients:
-#         if int(available_ingredient) in fresh_ingredients:
-#             available_fresh_ingredients += 1
-#     return available_fresh_ingredients
-
-
 def evaluate_freshness(fresh_ranges, available_ingredients):
     available_fresh_ingredients = 0
     for ingrediant in available_ingredients:
@@ -89,8 +72,6 @@ def main1(inputfile, expected_result_1=0, expected_result_2=0):
     fresh_ranges, available_ingredients = parse_input(read_file(inputfile))
     actual_result = evaluate_freshness(fresh_ranges, available_ingredients)
 
-    # actual_result = 0
-
     parse_result(actual_result, expected_result_1, inputfile)
 
 
@@ -98,16 +79,14 @@ def main2(inputfile, expected_result_1=0, expected_result_2=0):
     fresh_ranges, available_ingredients = parse_input(read_file(inputfile))
     filtered_ranges = filter_ranges(fresh_ranges)
     actual_result = calculate_fresh_ids(filtered_ranges)
-    # actual_result = calculate_fresh_ids(fresh_ranges)
-    # actual_result = 0
 
     parse_result(actual_result, expected_result_2, inputfile)
 
 
 if __name__ == "__main__":
     for inputfile in (
-        # ("example", 3, 14),
-        ("input", 782, -1),
+        ("example", 3, 14),
+        ("input", 782, 353863745078671),
     ):
-        # main1(*inputfile)
+        main1(*inputfile)
         main2(*inputfile)
