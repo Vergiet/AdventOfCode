@@ -1,4 +1,4 @@
 {
-  "remove_trailing_whitespace_on_save": false,
-  "format_on_save": "on"
+    "remove_trailing_whitespace_on_save": false,
+    "format_on_save": "on"
 }
